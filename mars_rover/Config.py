@@ -10,7 +10,7 @@ class Config:
         'N': 1,
         'E': 2,
         'S': 3,
-        'W': 4,
+        'W': 4
     }
 
     ROVER_INPUTS_FORMAT = {

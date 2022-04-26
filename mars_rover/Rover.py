@@ -22,21 +22,13 @@ class Rover:
         self.available_commands = Config.COMMANDS
         self.available_directions = Config.DIRECTIONS
 
-    def __str__(self):
-        """ Return Current position
-
-        Returns:
-            str: Return Current position
-        """
-        return self.current_position
-
-    @property
     def current_position(self):
         """ Final current position of the Rover
 
         Returns:
             str: Final current position of the Rover
         """
+        self.plateau.create_obstace(self.position.x, self.position.y)
         return f'{self.rover_name}:{self.position.x} {self.position.y} {self.get_heading}'
 
     @property
@@ -68,6 +60,9 @@ class Rover:
         """
 
         for command in commands:
+            if self.plateau.check_if_position_reserved(self.position.x, self.position.y):
+                raise Exception("This position is reserved by another Rover")
+            
             cmd = self.available_commands.get(command, None)
             if cmd:
                 getattr(self, cmd)()
@@ -81,7 +76,7 @@ class Rover:
             Bool: Bool
         """
         if not self.plateau.move_available(self.position):
-            return False
+            raise Exception("Cannot move further")
         # Assume that the square directly North from (x, y) is (x, y+1).
         if self.available_directions['N'] == self.heading:
             self.position.y += 1

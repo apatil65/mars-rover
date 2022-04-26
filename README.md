@@ -61,3 +61,12 @@ See `input.txt` in this repo for a sample test input.
 - Be prepared to give a brief overview on your design decisions.
 
 - **Don't hesitate to ask us for clarifications**
+
+# Execution 
+
+Run the below command to execute the Rover application.
+
+```
+python3 driver.py input.txt
+```
+

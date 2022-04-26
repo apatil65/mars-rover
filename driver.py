@@ -16,7 +16,7 @@ def command_interpreter(command, *args):
     """
     global plateau
     if command is ProcessInput.PlateauConfigState.Commands.CREATE_PLATEAU:
-        plateau = Plateau(args[0]+1, args[1]+1)
+        plateau = Plateau(args[0], args[1])
     elif command is ProcessInput.RoverInstructionsState.Commands.CREATE_ROVER:
         rover_name = args[0]
         rover_position = tuple(args[1:3])
@@ -27,7 +27,7 @@ def command_interpreter(command, *args):
         rover = Rover(rover_name, plateau, position,
                       Config.DIRECTIONS.get(rover_bearing))
         rover.run(rover_instructions)
-        print(rover)
+        print(rover.current_position())
 
 @Try.catch
 def process_input(input_filename):

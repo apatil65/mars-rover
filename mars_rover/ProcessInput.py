@@ -66,7 +66,6 @@ class ProcessInput:
             CREATE_PLATEAU = 0
 
         def parse_string(self, input_string):
-            input_string = input_string.strip()
             match_regex = re.compile(Config.PLATEAU_CFG_FORMAT)
             match_result = match_regex.match(input_string)
             if match_result is None:

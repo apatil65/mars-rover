@@ -1,4 +1,5 @@
-import unittest, os
+import unittest, os, io
+import unittest.mock
 import sys
 current = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.dirname(current))
@@ -41,13 +42,17 @@ class TestRover(unittest.TestCase):
 
 
 class TestMarsRover(unittest.TestCase):
-    def testMRover(self):
+    
+    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
+    def testMRover(self, mock_stdout):
         files = [
-            f'{current}/test_data/data1.txt'
+            f'{current}/test_data/data1.txt',
+            f'{current}/test_data/data2.txt'
         ]
         
         expected = [
-            'Invalid command D'
+            'Invalid command D',
+            "Rover1:3 7 N\nRover2:1 1 S\n"
         ]
         
         for i, fil in enumerate(files):
@@ -56,6 +61,9 @@ class TestMarsRover(unittest.TestCase):
                     process_input(fil)
 
                 self.assertTrue(expected[i] in str(context.exception))
+            else:
+                process_input(fil)
+                self.assertEqual(mock_stdout.getvalue(), expected[i])
 
         
 if __name__ == '__main__':
